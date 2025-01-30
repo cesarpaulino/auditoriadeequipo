@@ -1,6 +1,14 @@
 @echo off
 echo Obteniendo información del equipo...
-set "archivo=C:\Informes\InformacionEquipo.txt"
+:: Definir la ruta de la carpeta y el archivo
+set "carpeta=C:\Informes"
+set "archivo=%carpeta%\InformacionEquipo.txt"
+
+:: Verificar si la carpeta existe, si no, crearla
+if not exist "%carpeta%" (
+    echo Creando la carpeta "%carpeta%"...
+    mkdir "%carpeta%"
+)
 
 :: Crear o sobrescribir el archivo de salida
 echo Información del equipo > "%archivo%"
