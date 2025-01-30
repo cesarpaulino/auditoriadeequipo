@@ -15,26 +15,29 @@ Title Comando Obteniendo información del equipo
 @echo ::                                                            ::
 @echo ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 @echo off
-:: Definir la ruta de la carpeta y el archivo
+echo Obteniendo información del equipo...
+
+:: Definir la ruta de la carpeta
 set "carpeta=C:\Informes"
-set "archivo=%carpeta%\InformacionEquipo.txt"
-pause
+
 :: Verificar si la carpeta existe, si no, crearla
 if not exist "%carpeta%" (
     echo Creando la carpeta "%carpeta%"...
     mkdir "%carpeta%"
 )
-pause
 
-:: Generar un nombre único para el archivo usando la fecha y la hora
-for /f "tokens=1-4 delims=/: " %%a in ('echo %date% %time%') do (
-    set "fecha=%%a-%%b-%%c"
-    set "hora=%%d"
+:: Preguntar al usuario el nombre del archivo
+set /p "nombreArchivo=Por favor, ingresa el nombre del archivo (sin extensión): "
+set "archivo=%carpeta%\%nombreArchivo%.txt"
+
+:: Verificar si el archivo ya existe
+if exist "%archivo%" (
+    echo El archivo "%archivo%" ya existe. Por favor, elige otro nombre.
+    pause
+    exit /b 1
 )
-set "nombreArchivo=InformacionEquipo_%fecha%_%hora%.txt"
-set "archivo=%carpeta%\%nombreArchivo%"  
 
-:: Crear o sobrescribir el archivo de salida
+:: Crear el archivo de salida
 echo Información del equipo > "%archivo%"
 echo ===================== >> "%archivo%"
 echo. >> "%archivo%"
